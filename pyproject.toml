@@ -1,5 +1,5 @@
 [project]
-name = "tokenlens"
+name = "jihedailabs-tokenlens"
 version = "0.1.0"
 description = "Local, offline report of where your AI coding assistant tokens go — no telemetry, multi-tool."
 readme = "README.md"

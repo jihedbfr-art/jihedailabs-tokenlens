@@ -1,4 +1,4 @@
-# tokenlens
+# jihedailabs-tokenlens
 
 A local, offline report of where your AI coding assistant tokens actually go.
 
@@ -8,7 +8,7 @@ session, project, and model — including a rough split between the fixed
 per-session cost (system prompt, tools, skills, `CLAUDE.md`) and the tokens
 your actual conversation used.
 
-> Working name — not final.
+Part of [JihedAiLabs](https://github.com/jihedbfr-art).
 
 ## Why
 
