@@ -6,6 +6,8 @@ venv/
 build/
 dist/
 .pytest_cache/
+.coverage
+htmlcov/
 
 # Private working notes — never goes into the public repo
 BRIEF-DEMARRAGE.md

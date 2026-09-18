@@ -9,7 +9,7 @@ authors = [{ name = "JihedAiLabs", email = "contact@winnemchi.tn" }]
 dependencies = []
 
 [project.optional-dependencies]
-test = ["pytest>=8"]
+test = ["pytest>=8", "pytest-cov>=5"]
 
 [project.scripts]
 tokenlens = "tokenlens.cli:main"
