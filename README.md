@@ -1,5 +1,7 @@
 # jihedailabs-tokenlens
 
+[![CI](https://github.com/jihedbfr-art/jihedailabs-tokenlens/actions/workflows/ci.yml/badge.svg)](https://github.com/jihedbfr-art/jihedailabs-tokenlens/actions/workflows/ci.yml)
+
 A local, offline report of where your AI coding assistant tokens actually go.
 
 Reads the session logs your tools already write to disk (`~/.claude/projects/`,
