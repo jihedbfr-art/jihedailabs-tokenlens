@@ -25,3 +25,42 @@ jobs:
 
       - name: Run tests
         run: pytest -v --cov=tokenlens --cov-report=term-missing
+
+  coverage-badge:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package, test, and badge-generation tooling
+        run: |
+          pip install -e ".[test]"
+          # coverage-badge is unmaintained and needs pkg_resources, which
+          # recent setuptools versions dropped — pin an older one just for
+          # this job rather than fight the abandoned dependency.
+          pip install "setuptools<70" coverage-badge
+
+      - name: Measure coverage
+        run: pytest --cov=tokenlens --cov-report=term-missing
+
+      - name: Regenerate badge from the real measurement
+        run: |
+          mkdir -p badges
+          coverage-badge -o badges/coverage.svg -f
+
+      - name: Commit badge if it changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- badges/coverage.svg; then
+            git add badges/coverage.svg
+            git commit -m "Update coverage badge [skip ci]"
+            git push
+          fi

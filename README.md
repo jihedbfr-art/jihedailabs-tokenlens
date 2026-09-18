@@ -3,7 +3,7 @@
 [![CI](https://github.com/jihedbfr-art/jihedailabs-tokenlens/actions/workflows/ci.yml/badge.svg)](https://github.com/jihedbfr-art/jihedailabs-tokenlens/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](pyproject.toml)
-[![Coverage 89%](https://img.shields.io/badge/coverage-89%25-brightgreen.svg)](#tests)
+[![Coverage](badges/coverage.svg)](#tests)
 
 A local, offline report of where your AI coding assistant tokens actually go.
 
@@ -74,9 +74,9 @@ Every parser is tested against a real temporary SQLite/JSONL file built in
 the test itself — not a mock of the parsing logic — including the
 "schema doesn't match, return nothing" fallback path each one relies on.
 
-The coverage badge above is a static number from the last local run (89%,
-2026-09-18) — CI runs the suite on every push but doesn't regenerate the
-badge yet, so re-run the command above and update it by hand if it drifts.
+The coverage badge above is regenerated automatically by CI on every push
+to `master` (`badges/coverage.svg`, committed by the `coverage-badge` job)
+— it always reflects the last real measurement, never a hand-typed number.
 
 ## Principles
 
