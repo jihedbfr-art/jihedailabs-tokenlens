@@ -8,6 +8,9 @@ license = { text = "MIT" }
 authors = [{ name = "JihedAiLabs", email = "contact@winnemchi.tn" }]
 dependencies = []
 
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
 [project.scripts]
 tokenlens = "tokenlens.cli:main"
 

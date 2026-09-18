@@ -58,6 +58,17 @@ pip install -e .
 tokenlens
 ```
 
+## Tests
+
+```bash
+pip install -e ".[test]"
+pytest
+```
+
+Every parser is tested against a real temporary SQLite/JSONL file built in
+the test itself — not a mock of the parsing logic — including the
+"schema doesn't match, return nothing" fallback path each one relies on.
+
 ## Principles
 
 - 100% local. No network calls, no telemetry, ever.
