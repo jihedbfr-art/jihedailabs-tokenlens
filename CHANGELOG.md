@@ -7,6 +7,14 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - Unit tests covering every parser and the report aggregation logic.
+- GitHub Actions CI, running the test suite on Ubuntu, Windows, and macOS
+  across Python 3.9 and 3.12 on every push and pull request.
+
+### Fixed
+- Python 3.9 compatibility: `X | None` union syntax (PEP 604) needs 3.10+
+  unless annotations are deferred. CI caught this on its first run; every
+  affected file now starts with `from __future__ import annotations`
+  instead of narrowing the `>=3.9` support this project advertises.
 
 ## [0.1.0] - 2026-09-18
 
