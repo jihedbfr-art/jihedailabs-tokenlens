@@ -5,6 +5,7 @@ description = "Local, offline report of where your AI coding assistant tokens go
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
+authors = [{ name = "JihedAiLabs", email = "contact@winnemchi.tn" }]
 dependencies = []
 
 [project.scripts]
