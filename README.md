@@ -36,9 +36,15 @@ Early prototype. Currently supported:
   lives on their servers, not on disk. Treat these numbers as a rough shape,
   not a bill. Also not verified against a real installation.
 
-Not yet supported: GitHub Copilot. It routes agent traffic through its own
-backend and doesn't expose reliable local token counts — to be investigated
-honestly before claiming support.
+- **GitHub Copilot CLI** — full breakdown, schema *confirmed* against a real
+  local `~/.copilot/data.db` file (the `sessions` table really does carry
+  `total_input_tokens` / `total_output_tokens` / `total_cached_tokens` /
+  `total_reasoning_tokens`). That table was empty on the machine this was
+  written on, so the column *values* are still unobserved — two mapping
+  choices (cached → cache-read, reasoning → folded into output) are
+  assumptions, spelled out in the code, not verified against real numbers
+  yet. Only the Copilot CLI store is read; VS Code's `github.copilot-chat`
+  extension keeps a separate, near-empty store with no usable data.
 
 ## Install
 
@@ -81,10 +87,11 @@ outils, skills, `CLAUDE.md`) par rapport au coût de la conversation elle-même.
 réduire le contexte. Celui-ci commence une étape avant : on n'optimise pas ce
 qu'on n'a pas mesuré.
 
-**Statut** : prototype précoce. Claude Code et Windsurf/Devin Desktop sont
-couverts en détail, Codex CLI en version grossière. Cursor est marqué comme
-**estimé** en permanence — son propre champ local `tokenCount` est documenté
-comme peu fiable ailleurs, donc pas de fausse précision ici. Windsurf et
-Cursor n'ont pas encore été vérifiés sur une vraie installation (ni l'un ni
-l'autre n'est installé sur la machine où ce code a été écrit). Copilot n'est
-pas encore supporté.
+**Statut** : prototype précoce. Claude Code, Windsurf/Devin Desktop et GitHub
+Copilot CLI sont couverts en détail, Codex CLI en version grossière. Cursor
+est marqué comme **estimé** en permanence — son propre champ local
+`tokenCount` est documenté comme peu fiable ailleurs, donc pas de fausse
+précision ici. Le schéma de Copilot CLI a été vérifié sur un vrai fichier
+local (table vide, donc valeurs pas encore observées) ; Windsurf et Cursor
+n'ont pas encore été vérifiés du tout (aucun des deux n'est installé sur la
+machine où ce code a été écrit).
