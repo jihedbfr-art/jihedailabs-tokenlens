@@ -17,6 +17,7 @@ class ToolSummary:
     output_tokens: int = 0
     fixed_cost_tokens: int = 0  # sum of cache_creation on first event of each session
     session_count_with_fixed_cost: int = 0
+    estimated_events: int = 0
     by_project: dict = field(default_factory=lambda: defaultdict(int))
     by_model: dict = field(default_factory=lambda: defaultdict(int))
     by_session: dict = field(default_factory=lambda: defaultdict(int))
@@ -39,6 +40,8 @@ def build_report(events: Iterable[UsageEvent]) -> dict[str, ToolSummary]:
         if event.is_first_in_session and event.cache_creation_tokens:
             summary.fixed_cost_tokens += event.cache_creation_tokens
             summary.session_count_with_fixed_cost += 1
+        if event.is_estimated:
+            summary.estimated_events += 1
     return summaries
 
 
@@ -46,12 +49,14 @@ def format_report(summaries: dict[str, ToolSummary], top_n: int = 5) -> str:
     if not summaries:
         return (
             "No local usage data found for any supported tool.\n"
-            "Supported so far: Claude Code, Codex CLI (coarse)."
+            "Supported so far: Claude Code, Codex CLI (coarse), "
+            "Cursor (estimated), Windsurf/Devin Desktop."
         )
 
     lines: list[str] = []
     for tool, summary in summaries.items():
-        lines.append(f"\n=== {tool} ===")
+        label = " (ESTIMATED — not officially exposed by this tool)" if summary.estimated_events else ""
+        lines.append(f"\n=== {tool}{label} ===")
         lines.append(f"Sessions: {len(summary.sessions)}   Events: {summary.events}")
         lines.append(f"Total tokens: {summary.total_tokens:,}")
         lines.append(

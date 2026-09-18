@@ -21,13 +21,24 @@ cut, know what's actually costing you.
 Early prototype. Currently supported:
 
 - **Claude Code** — full breakdown (input / cache write / cache read / output).
+  Verified against real local transcripts.
 - **Codex CLI** — coarse per-thread totals only; Codex's local database does not
   split token types at that level, and the per-message log format hasn't been
   verified yet. No numbers are invented to fill the gap.
+- **Windsurf / Devin Desktop** — full breakdown, same fields as Claude Code.
+  Windsurf was renamed Devin Desktop after Cognition's acquisition; the local
+  database still uses the old product name internally. **Not verified against
+  a real installation** — built from public documentation of the schema, not
+  from a file this tool actually opened.
+- **Cursor** — reported as **estimated**, always. Cursor stores a `tokenCount`
+  field per chat message locally, but multiple independent projects that
+  inspected it found it unreliable or unused — Cursor's real billed usage
+  lives on their servers, not on disk. Treat these numbers as a rough shape,
+  not a bill. Also not verified against a real installation.
 
-Not yet supported: Cursor, Windsurf, GitHub Copilot. These tools route agent
-traffic through their own backend and don't expose reliable local token counts
-— to be investigated honestly before claiming support.
+Not yet supported: GitHub Copilot. It routes agent traffic through its own
+backend and doesn't expose reliable local token counts — to be investigated
+honestly before claiming support.
 
 ## Install
 
@@ -70,6 +81,10 @@ outils, skills, `CLAUDE.md`) par rapport au coût de la conversation elle-même.
 réduire le contexte. Celui-ci commence une étape avant : on n'optimise pas ce
 qu'on n'a pas mesuré.
 
-**Statut** : prototype précoce. Claude Code est couvert en détail, Codex CLI
-en version grossière (limite documentée honnêtement ci-dessus, pas de chiffre
-inventé). Cursor, Windsurf et Copilot ne sont pas encore supportés.
+**Statut** : prototype précoce. Claude Code et Windsurf/Devin Desktop sont
+couverts en détail, Codex CLI en version grossière. Cursor est marqué comme
+**estimé** en permanence — son propre champ local `tokenCount` est documenté
+comme peu fiable ailleurs, donc pas de fausse précision ici. Windsurf et
+Cursor n'ont pas encore été vérifiés sur une vraie installation (ni l'un ni
+l'autre n'est installé sur la machine où ce code a été écrit). Copilot n'est
+pas encore supporté.

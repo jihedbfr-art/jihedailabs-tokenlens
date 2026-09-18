@@ -15,6 +15,7 @@ class UsageEvent:
     cache_read_tokens: int
     output_tokens: int
     is_first_in_session: bool = False  # fixed-cost proxy: system prompt + tools + skills + CLAUDE.md
+    is_estimated: bool = False  # source tool doesn't officially expose/guarantee this number
 
     @property
     def total_tokens(self) -> int:

@@ -2,9 +2,11 @@ import argparse
 
 from tokenlens.parsers.claude_code import ClaudeCodeParser
 from tokenlens.parsers.codex_cli import CodexCliParser
+from tokenlens.parsers.cursor import CursorParser
+from tokenlens.parsers.windsurf import WindsurfParser
 from tokenlens.report import build_report, format_report
 
-PARSERS = [ClaudeCodeParser(), CodexCliParser()]
+PARSERS = [ClaudeCodeParser(), CodexCliParser(), CursorParser(), WindsurfParser()]
 
 
 def main() -> None:
