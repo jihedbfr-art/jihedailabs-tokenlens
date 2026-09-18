@@ -1,6 +1,7 @@
 # jihedailabs-tokenlens
 
 [![CI](https://github.com/jihedbfr-art/jihedailabs-tokenlens/actions/workflows/ci.yml/badge.svg)](https://github.com/jihedbfr-art/jihedailabs-tokenlens/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A local, offline report of where your AI coding assistant tokens actually go.
 
