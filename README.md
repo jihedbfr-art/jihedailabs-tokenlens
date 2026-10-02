@@ -5,6 +5,8 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](pyproject.toml)
 [![Coverage](badges/coverage.svg)](#tests)
 
+[🇫🇷 Lire en Français](README.fr.md)
+
 A local, offline report of where your AI coding assistant tokens actually go.
 
 Reads the session logs your tools already write to disk (`~/.claude/projects/`,
@@ -95,23 +97,4 @@ contact@winnemchi.tn
 
 ---
 
-## En français
-
-Un rapport local et hors-ligne de la consommation réelle de tokens de vos
-assistants IA de code. Lit les journaux de session déjà écrits sur disque par
-vos outils, n'envoie rien sur le réseau, et affiche une répartition par
-session, projet et modèle — avec une estimation du coût fixe (prompt système,
-outils, skills, `CLAUDE.md`) par rapport au coût de la conversation elle-même.
-
-**Pourquoi** : la plupart des outils "d'économie de tokens" cherchent à
-réduire le contexte. Celui-ci commence une étape avant : on n'optimise pas ce
-qu'on n'a pas mesuré.
-
-**Statut** : prototype précoce. Claude Code, Windsurf/Devin Desktop et GitHub
-Copilot CLI sont couverts en détail, Codex CLI en version grossière. Cursor
-est marqué comme **estimé** en permanence — son propre champ local
-`tokenCount` est documenté comme peu fiable ailleurs, donc pas de fausse
-précision ici. Le schéma de Copilot CLI a été vérifié sur un vrai fichier
-local (table vide, donc valeurs pas encore observées) ; Windsurf et Cursor
-n'ont pas encore été vérifiés du tout (aucun des deux n'est installé sur la
-machine où ce code a été écrit).
+Version française complète : [README.fr.md](README.fr.md).
