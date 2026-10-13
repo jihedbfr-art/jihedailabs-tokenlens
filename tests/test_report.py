@@ -60,6 +60,16 @@ def test_format_report_handles_no_data():
     assert "No local usage data found" in text
 
 
+def test_unclassified_tokens_keep_codex_totals_without_claiming_input_usage():
+    summaries = build_report([event(tool="codex-cli", unclassified_tokens=12345)])
+    summary = summaries["codex-cli"]
+
+    assert summary.total_tokens == 12345
+    assert summary.input_tokens == 0
+    assert "input=0" in format_report(summaries)
+    assert "unclassified=12,345" in format_report(summaries)
+
+
 def test_by_project_and_by_session_track_totals_independently():
     events = [
         event(project="alpha", session_id="s1", input_tokens=10),

@@ -16,6 +16,7 @@ class UsageEvent:
     output_tokens: int
     is_first_in_session: bool = False  # fixed-cost proxy: system prompt + tools + skills + CLAUDE.md
     is_estimated: bool = False  # source tool doesn't officially expose/guarantee this number
+    unclassified_tokens: int = 0  # aggregate total with no reliable input/output split
 
     @property
     def total_tokens(self) -> int:
@@ -24,4 +25,5 @@ class UsageEvent:
             + self.cache_creation_tokens
             + self.cache_read_tokens
             + self.output_tokens
+            + self.unclassified_tokens
         )

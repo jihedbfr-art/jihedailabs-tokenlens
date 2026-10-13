@@ -30,8 +30,8 @@ Early prototype. Currently supported:
 - **Claude Code** — full breakdown (input / cache write / cache read / output).
   Verified against real local transcripts.
 - **Codex CLI** — coarse per-thread totals only; Codex's local database does not
-  split token types at that level, and the per-message log format hasn't been
-  verified yet. No numbers are invented to fill the gap.
+  split token types at that level. These totals appear as `unclassified`, not
+  as input tokens. The per-message log format hasn't been verified yet.
 - **Windsurf / Devin Desktop** — full breakdown, same fields as Claude Code.
   Windsurf was renamed Devin Desktop after Cognition's acquisition; the local
   database still uses the old product name internally. **Not verified against
