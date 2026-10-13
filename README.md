@@ -41,7 +41,8 @@ Early prototype. Currently supported:
   field per chat message locally, but multiple independent projects that
   inspected it found it unreliable or unused — Cursor's real billed usage
   lives on their servers, not on disk. Treat these numbers as a rough shape,
-  not a bill. Also not verified against a real installation.
+  not a bill. The count appears as `unclassified` because its input/output split
+  is unknown. Also not verified against a real installation.
 
 - **GitHub Copilot CLI** — full breakdown, schema *confirmed* against a real
   local `~/.copilot/data.db` file (the `sessions` table really does carry

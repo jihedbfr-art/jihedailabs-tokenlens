@@ -46,13 +46,15 @@ def test_fixed_cost_only_counts_first_event_with_cache_write():
 
 
 def test_estimated_events_are_counted_and_labeled_in_output():
-    events = [event(tool="cursor", input_tokens=1, is_estimated=True)]
+    events = [event(tool="cursor", unclassified_tokens=1, is_estimated=True)]
     summaries = build_report(events)
     assert summaries["cursor"].estimated_events == 1
 
     text = format_report(summaries)
     assert "cursor" in text
     assert "ESTIMATED" in text
+    assert "input=0" in text
+    assert "unclassified=1" in text
 
 
 def test_format_report_handles_no_data():

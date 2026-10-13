@@ -46,7 +46,9 @@ def test_reads_bubbles_with_positive_token_count(tmp_path):
     event = events[0]
     assert event.is_estimated is True
     assert event.session_id == "composer-1"
-    assert event.input_tokens == 500
+    assert event.input_tokens == 0
+    assert event.unclassified_tokens == 500
+    assert event.total_tokens == 500
     assert event.model == "gpt-5"
 
 
