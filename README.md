@@ -42,6 +42,8 @@ Early prototype. Currently supported:
   inspected it found it unreliable or unused — Cursor's real billed usage
   lives on their servers, not on disk. Treat these numbers as a rough shape,
   not a bill. Also not verified against a real installation.
+  Malformed JSON and JSON values that are not objects are skipped, so a bad local record
+  does not hide valid usage entries that follow it.
 
 - **GitHub Copilot CLI** — full breakdown, schema *confirmed* against a real
   local `~/.copilot/data.db` file (the `sessions` table really does carry

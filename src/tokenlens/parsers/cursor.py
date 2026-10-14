@@ -76,6 +76,8 @@ class CursorParser(ToolParser):
             data = json.loads(raw_value)
         except (TypeError, ValueError):
             return None
+        if not isinstance(data, dict):
+            return None
         token_count = data.get("tokenCount")
         if not isinstance(token_count, (int, float)) or token_count <= 0:
             return None
