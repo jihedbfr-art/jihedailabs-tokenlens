@@ -64,7 +64,13 @@ pip install -e .
 
 ```bash
 tokenlens
+tokenlens --json
 ```
+
+`--json` writes a versioned report to standard output for local scripts. It keeps
+`unclassified` separate from measured input, output and cache tokens, and marks
+estimated events and the fixed-cost proxy. Project names and session IDs can
+identify local work: review the output before sharing it or saving it to a file.
 
 ## Tests
 
