@@ -44,6 +44,7 @@ Early prototype. Currently supported:
   not a bill. Also not verified against a real installation.
   Malformed JSON and JSON values that are not objects are skipped, so a bad local record
   does not hide valid usage entries that follow it.
+  Boolean and non-finite token counts are skipped too.
 
 - **GitHub Copilot CLI** — full breakdown, schema *confirmed* against a real
   local `~/.copilot/data.db` file (the `sessions` table really does carry
