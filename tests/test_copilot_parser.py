@@ -62,3 +62,21 @@ def test_missing_required_columns_yields_nothing(tmp_path):
 
     parser = CopilotParser(root=tmp_path)
     assert list(parser.read_events()) == []
+
+
+def test_keeps_sessions_with_only_cached_or_reasoning_tokens(tmp_path):
+    make_full_schema_db(tmp_path / "data.db")
+    con = sqlite3.connect(tmp_path / "data.db")
+    con.executemany(
+        "insert into sessions values (?, ?, ?, ?, ?, ?, ?)",
+        [
+            ("cache-only", "gpt-5", "2026-09-18T11:00:00Z", 0, 0, 25, 0),
+            ("reasoning-only", "gpt-5", "2026-09-18T12:00:00Z", 0, 0, 0, 12),
+        ],
+    )
+    con.commit()
+    con.close()
+
+    events = {event.session_id: event for event in CopilotParser(root=tmp_path).read_events()}
+    assert events["cache-only"].cache_read_tokens == 25
+    assert events["reasoning-only"].output_tokens == 12
