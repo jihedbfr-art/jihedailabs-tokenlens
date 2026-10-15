@@ -1,6 +1,8 @@
 import json
 import sqlite3
 
+import pytest
+
 from tokenlens.parsers.cursor import CursorParser
 
 
@@ -56,3 +58,37 @@ def test_malformed_json_value_is_skipped(tmp_path):
     make_state_vscdb(tmp_path / "state.vscdb", [("bubbleId:c1:b1", "not valid json")])
     parser = CursorParser(root=tmp_path)
     assert list(parser.read_events()) == []
+
+
+@pytest.mark.parametrize("invalid_value", [None, [], "unexpected", 123, True])
+def test_non_object_json_does_not_hide_valid_bubbles(tmp_path, invalid_value):
+    make_state_vscdb(
+        tmp_path / "state.vscdb",
+        [
+            ("bubbleId:c1:invalid", json.dumps(invalid_value)),
+            ("bubbleId:c1:valid", json.dumps({"tokenCount": 500, "modelName": "sample-model"})),
+        ],
+    )
+
+    events = list(CursorParser(root=tmp_path).read_events())
+
+    assert len(events) == 1
+    assert events[0].total_tokens == 500
+    assert events[0].is_estimated is True
+
+
+@pytest.mark.parametrize("invalid_count", [True, float("nan"), float("inf"), float("-inf")])
+def test_invalid_token_count_does_not_hide_valid_bubbles(tmp_path, invalid_count):
+    make_state_vscdb(
+        tmp_path / "state.vscdb",
+        [
+            ("bubbleId:c1:invalid", json.dumps({"tokenCount": invalid_count})),
+            ("bubbleId:c1:valid", json.dumps({"tokenCount": 500, "modelName": "sample-model"})),
+        ],
+    )
+
+    events = list(CursorParser(root=tmp_path).read_events())
+
+    assert len(events) == 1
+    assert events[0].total_tokens == 500
+    assert events[0].is_estimated is True

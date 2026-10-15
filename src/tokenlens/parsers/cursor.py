@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import sqlite3
 import sys
@@ -76,8 +77,12 @@ class CursorParser(ToolParser):
             data = json.loads(raw_value)
         except (TypeError, ValueError):
             return None
+        if not isinstance(data, dict):
+            return None
         token_count = data.get("tokenCount")
-        if not isinstance(token_count, (int, float)) or token_count <= 0:
+        if isinstance(token_count, bool) or not isinstance(token_count, (int, float)):
+            return None
+        if token_count <= 0 or (isinstance(token_count, float) and not math.isfinite(token_count)):
             return None
         parts = key.split(":")
         composer_id = parts[1] if len(parts) > 1 else "unknown"
