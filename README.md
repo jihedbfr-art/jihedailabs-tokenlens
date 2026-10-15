@@ -30,8 +30,8 @@ Early prototype. Currently supported:
 - **Claude Code** — full breakdown (input / cache write / cache read / output).
   Verified against real local transcripts.
 - **Codex CLI** — coarse per-thread totals only; Codex's local database does not
-  split token types at that level, and the per-message log format hasn't been
-  verified yet. No numbers are invented to fill the gap.
+  split token types at that level. These totals appear as `unclassified`, not
+  as input tokens. The per-message log format hasn't been verified yet.
 - **Windsurf / Devin Desktop** — full breakdown, same fields as Claude Code.
   Windsurf was renamed Devin Desktop after Cognition's acquisition; the local
   database still uses the old product name internally. **Not verified against
@@ -41,7 +41,8 @@ Early prototype. Currently supported:
   field per chat message locally, but multiple independent projects that
   inspected it found it unreliable or unused — Cursor's real billed usage
   lives on their servers, not on disk. Treat these numbers as a rough shape,
-  not a bill. Also not verified against a real installation.
+  not a bill. The count appears as `unclassified` because its input/output split
+  is unknown. Also not verified against a real installation.
   Malformed JSON and JSON values that are not objects are skipped, so a bad local record
   does not hide valid usage entries that follow it.
   Boolean and non-finite token counts are skipped too.

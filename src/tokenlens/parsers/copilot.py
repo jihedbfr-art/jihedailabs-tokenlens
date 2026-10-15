@@ -88,7 +88,8 @@ class CopilotParser(ToolParser):
                        coalesce(total_output_tokens, 0) + {reasoning_expr},
                        {cached_expr}
                 from sessions
-                where coalesce(total_input_tokens, 0) + coalesce(total_output_tokens, 0) > 0
+                where coalesce(total_input_tokens, 0) + coalesce(total_output_tokens, 0)
+                      + {reasoning_expr} + {cached_expr} > 0
                 """
             )
             rows = cur.fetchall()

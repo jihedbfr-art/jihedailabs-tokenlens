@@ -46,18 +46,30 @@ def test_fixed_cost_only_counts_first_event_with_cache_write():
 
 
 def test_estimated_events_are_counted_and_labeled_in_output():
-    events = [event(tool="cursor", input_tokens=1, is_estimated=True)]
+    events = [event(tool="cursor", unclassified_tokens=1, is_estimated=True)]
     summaries = build_report(events)
     assert summaries["cursor"].estimated_events == 1
 
     text = format_report(summaries)
     assert "cursor" in text
     assert "ESTIMATED" in text
+    assert "input=0" in text
+    assert "unclassified=1" in text
 
 
 def test_format_report_handles_no_data():
     text = format_report({})
     assert "No local usage data found" in text
+
+
+def test_unclassified_tokens_keep_codex_totals_without_claiming_input_usage():
+    summaries = build_report([event(tool="codex-cli", unclassified_tokens=12345)])
+    summary = summaries["codex-cli"]
+
+    assert summary.total_tokens == 12345
+    assert summary.input_tokens == 0
+    assert "input=0" in format_report(summaries)
+    assert "unclassified=12,345" in format_report(summaries)
 
 
 def test_by_project_and_by_session_track_totals_independently():

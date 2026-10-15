@@ -92,9 +92,10 @@ class CursorParser(ToolParser):
             project="unknown",  # composer entries aren't linked to a workspace here
             model=data.get("modelName") or data.get("model") or "unknown",
             timestamp="",
-            input_tokens=int(token_count),
+            input_tokens=0,
             cache_creation_tokens=0,
             cache_read_tokens=0,
             output_tokens=0,
             is_estimated=True,
+            unclassified_tokens=int(token_count),
         )

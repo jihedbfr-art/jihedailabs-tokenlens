@@ -18,8 +18,8 @@ class CodexCliParser(ToolParser):
     contain that detail, but its format has not been verified yet (no populated
     session was available to inspect at the time this was written — 2026-09-18).
     Until that's confirmed, this parser reports coarse per-thread totals only,
-    with all tokens bucketed under input_tokens so totals stay correct and
-    nothing is fabricated.
+    with all tokens bucketed under unclassified_tokens so totals stay correct
+    without claiming they were input tokens.
     """
 
     name = "codex-cli"
@@ -55,10 +55,11 @@ class CodexCliParser(ToolParser):
                     project=os.path.basename(cwd) if cwd else "unknown",
                     model=model or "unknown",
                     timestamp=str(updated_at) if updated_at is not None else "",
-                    input_tokens=int(tokens_used),
+                    input_tokens=0,
                     cache_creation_tokens=0,
                     cache_read_tokens=0,
                     output_tokens=0,
+                    unclassified_tokens=int(tokens_used),
                     is_first_in_session=True,
                 )
         except sqlite3.Error:

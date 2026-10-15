@@ -45,8 +45,8 @@ def test_reads_coarse_per_thread_totals(tmp_path):
     assert event.tool == "codex-cli"
     assert event.session_id == "thread-1"
     assert event.project == "some-project"
-    assert event.input_tokens == 12345
-    # coarse totals are bucketed under input_tokens only, never invented
+    assert event.input_tokens == 0
+    assert event.unclassified_tokens == 12345
     assert event.cache_creation_tokens == 0
     assert event.cache_read_tokens == 0
     assert event.output_tokens == 0
