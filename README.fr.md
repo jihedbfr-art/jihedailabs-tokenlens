@@ -39,7 +39,14 @@ pip install -e .
 
 ```bash
 tokenlens
+tokenlens --json
 ```
+
+`--json` écrit sur la sortie standard un rapport versionné utilisable par des scripts locaux.
+Les tokens `unclassified` restent séparés des mesures d'entrée, de sortie et de cache ; les
+événements estimés et l'approximation du coût fixe sont signalés. Les noms de
+projets et identifiants de session peuvent révéler votre travail local : relisez
+le résultat avant de le partager ou de l'enregistrer.
 
 ## Tests
 

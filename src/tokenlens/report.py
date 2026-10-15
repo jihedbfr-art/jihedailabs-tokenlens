@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from collections import defaultdict
 from collections.abc import Iterable
 from dataclasses import dataclass, field
@@ -47,6 +48,45 @@ def build_report(events: Iterable[UsageEvent]) -> dict[str, ToolSummary]:
         if event.is_estimated:
             summary.estimated_events += 1
     return summaries
+
+
+def format_report_json(summaries: dict[str, ToolSummary], top_n: int = 5) -> str:
+    """Return a stable, machine-readable snapshot without changing token categories."""
+    tools = []
+    for name, summary in sorted(summaries.items()):
+        tools.append({
+            "name": name,
+            "events": summary.events,
+            "sessions": len(summary.sessions),
+            "total_tokens": summary.total_tokens,
+            "tokens": {
+                "input": summary.input_tokens,
+                "cache_write": summary.cache_creation_tokens,
+                "cache_read": summary.cache_read_tokens,
+                "output": summary.output_tokens,
+                "unclassified": summary.unclassified_tokens,
+            },
+            "estimated_events": summary.estimated_events,
+            "fixed_cost_tokens_estimate": summary.fixed_cost_tokens,
+            "sessions_with_fixed_cost": summary.session_count_with_fixed_cost,
+            "top_projects": [
+                {"name": project, "tokens": tokens}
+                for project, tokens in sorted(
+                    summary.by_project.items(), key=lambda item: (-item[1], item[0])
+                )[:top_n]
+            ],
+            "top_sessions": [
+                {"id": session, "tokens": tokens}
+                for session, tokens in sorted(
+                    summary.by_session.items(), key=lambda item: (-item[1], item[0])
+                )[:top_n]
+            ],
+            "by_model": [
+                {"name": model, "tokens": tokens}
+                for model, tokens in sorted(summary.by_model.items())
+            ],
+        })
+    return json.dumps({"schema_version": 1, "tools": tools}, ensure_ascii=False, indent=2)
 
 
 def format_report(summaries: dict[str, ToolSummary], top_n: int = 5) -> str:
