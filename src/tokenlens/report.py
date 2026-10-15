@@ -17,6 +17,7 @@ class ToolSummary:
     cache_creation_tokens: int = 0
     cache_read_tokens: int = 0
     output_tokens: int = 0
+    unclassified_tokens: int = 0
     fixed_cost_tokens: int = 0  # sum of cache_creation on first event of each session
     session_count_with_fixed_cost: int = 0
     estimated_events: int = 0
@@ -36,6 +37,7 @@ def build_report(events: Iterable[UsageEvent]) -> dict[str, ToolSummary]:
         summary.cache_creation_tokens += event.cache_creation_tokens
         summary.cache_read_tokens += event.cache_read_tokens
         summary.output_tokens += event.output_tokens
+        summary.unclassified_tokens += event.unclassified_tokens
         summary.by_project[event.project] += event.total_tokens
         summary.by_model[event.model] += event.total_tokens
         summary.by_session[event.session_id] += event.total_tokens
@@ -52,7 +54,7 @@ def format_report(summaries: dict[str, ToolSummary], top_n: int = 5) -> str:
         return (
             "No local usage data found for any supported tool.\n"
             "Supported so far: Claude Code, Codex CLI (coarse), "
-            "Cursor (estimated), Windsurf/Devin Desktop."
+            "Cursor (estimated), Windsurf/Devin Desktop, GitHub Copilot CLI."
         )
 
     lines: list[str] = []
@@ -62,11 +64,12 @@ def format_report(summaries: dict[str, ToolSummary], top_n: int = 5) -> str:
         lines.append(f"Sessions: {len(summary.sessions)}   Events: {summary.events}")
         lines.append(f"Total tokens: {summary.total_tokens:,}")
         lines.append(
-            "  input={:,}  cache_write={:,}  cache_read={:,}  output={:,}".format(
+            "  input={:,}  cache_write={:,}  cache_read={:,}  output={:,}  unclassified={:,}".format(
                 summary.input_tokens,
                 summary.cache_creation_tokens,
                 summary.cache_read_tokens,
                 summary.output_tokens,
+                summary.unclassified_tokens,
             )
         )
         if summary.session_count_with_fixed_cost:
