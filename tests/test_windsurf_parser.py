@@ -65,3 +65,23 @@ def test_schema_drift_yields_nothing_instead_of_guessing(tmp_path):
 
     parser = WindsurfParser(root=tmp_path)
     assert list(parser.read_events()) == []
+
+
+def test_malformed_token_row_does_not_hide_valid_usage(tmp_path):
+    db_path = tmp_path / "sessions.db"
+    make_full_schema_db(db_path)
+    con = sqlite3.connect(db_path)
+    con.executemany(
+        "insert into message_nodes values (?, ?, ?, ?, ?)",
+        [
+            ("sess-1", "invalid", 5, 0, 0),
+            ("sess-1", -1, 5, 0, 0),
+            ("sess-1", 1.5, 5, 0, 0),
+        ],
+    )
+    con.commit()
+    con.close()
+
+    events = list(WindsurfParser(root=tmp_path).read_events())
+    assert len(events) == 1
+    assert events[0].input_tokens == 10

@@ -101,6 +101,10 @@ class WindsurfParser(ToolParser):
                 """
             )
             for session_id, model, cwd, input_tokens, output_tokens, cache_read, cache_write in cur.fetchall():
+                counts = (input_tokens, output_tokens, cache_read, cache_write)
+                if any(value is not None and (not isinstance(value, int) or value < 0) for value in counts):
+                    # A malformed row must not abort the whole report or become a token count.
+                    continue
                 yield UsageEvent(
                     tool=self.name,
                     session_id=session_id or "unknown",

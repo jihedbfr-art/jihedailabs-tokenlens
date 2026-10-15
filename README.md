@@ -36,7 +36,8 @@ Early prototype. Currently supported:
   Windsurf was renamed Devin Desktop after Cognition's acquisition; the local
   database still uses the old product name internally. **Not verified against
   a real installation** — built from public documentation of the schema, not
-  from a file this tool actually opened.
+  from a file this tool actually opened. Rows with malformed, negative or
+  fractional token counts are skipped; valid rows remain in the report.
 - **Cursor** — reported as **estimated**, always. Cursor stores a `tokenCount`
   field per chat message locally, but multiple independent projects that
   inspected it found it unreliable or unused — Cursor's real billed usage
