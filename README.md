@@ -106,6 +106,10 @@ MIT
 
 contact@winnemchi.tn
 
+## Distribution checks
+
+[Distribution checks](DISTRIBUTION.md) — Build and verify the source archive and wheel, then exercise the installed commands outside the checkout.
+
 ---
 
 Version française complète : [README.fr.md](README.fr.md).

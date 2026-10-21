@@ -72,3 +72,8 @@ MIT
 ## Contact
 
 contact@winnemchi.tn
+
+
+## Contrôles de distribution
+
+[Contrôles de distribution](DISTRIBUTION.fr.md) — Construire et vérifier l’archive source et le wheel, puis exercer les commandes installées hors du checkout.
